@@ -313,7 +313,7 @@
   // ── 백엔드 주소 ────────────────────────────────────
   // 로컬에서 열면 내 컴퓨터의 FastAPI를, 배포된 사이트에서 열면 Render를 부른다.
   const LOCAL_API    = "http://127.0.0.1:8000";
-  const DEPLOYED_API = "https://TODO-render-주소.onrender.com";   // ← Render 배포 후 교체
+  const DEPLOYED_API = "https://soomin-profile.onrender.com";   // Render에 배포한 백엔드
 
   const isLocal = ["localhost", "127.0.0.1"].includes(location.hostname);
   const API_URL = isLocal ? LOCAL_API : DEPLOYED_API;
