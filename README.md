@@ -21,7 +21,8 @@
 soomin-profile/
 ├── frontend/          # Vercel 배포
 │   ├── index.html     # 개인 소개 + 백엔드 연동 (한 페이지)
-│   └── avatar.png     # 픽셀 아트 아바타
+│   ├── avatar.png     # 픽셀 아트 아바타
+│   └── dooly.png      # 강아지 둘리
 ├── backend/           # Render 배포
 │   ├── main.py        # FastAPI 앱
 │   ├── requirements.txt
