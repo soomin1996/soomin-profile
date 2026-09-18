@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEET SOOMIN — 서수민 소개</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri@2.40.3/dist/galmuri.css">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* 종이 — 한국 모눈노트의 연한 민트색 */
+    --paper:    #e7ece2;
+    --grid-fine:#dae1d2;
+    --grid-bold:#c6d0ba;
+
+    /* 잉크 — 완전한 검정 대신 초록기가 도는 먹색 */
+    --ink:      #1f241e;
+    --ink-60:   #5c6357;
+    --ink-35:   #8d9387;
+
+    /* 창 — 종이보다 따뜻한 흰색 */
+    --win:      #fdfcf6;
+    --win-2:    #f2f1e6;
+
+    /* 강조 — 아바타 자켓 로고의 핑크. 상호작용에만 쓴다 */
+    --accent:   #d1467c;
+    --accent-s: #f7d9e6;
+
+    /* 성공 신호 */
+    --leaf:     #5a7f43;
+
+    --shadow:   rgba(31,36,30,.30);
+  }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    min-height: 100vh;
+    background-color: var(--paper);
+    /* 모눈종이 — 작은 칸 위에 굵은 칸을 겹쳐 깐다 */
+    background-image:
+      linear-gradient(var(--grid-fine) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-fine) 1px, transparent 1px),
+      linear-gradient(var(--grid-bold) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-bold) 1px, transparent 1px);
+    background-size: 18px 18px, 18px 18px, 90px 90px, 90px 90px;
+    color: var(--ink);
+    font-family: Galmuri11, 'Apple SD Gothic Neo', sans-serif;
+    font-size: 13px;
+    line-height: 1.85;
+    image-rendering: pixelated;
+  }
+
+  /* ── 창(윈도우) ────────────────────────────────── */
+  .win {
+    background: var(--win);
+    border: 2px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--shadow);
+    min-width: 150px;
+  }
+
+  .bar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px;
+    background: var(--ink);
+    color: var(--win);
+    padding: 3px 4px 3px 8px;
+    font-size: 11px;
+    letter-spacing: .06em;
+    cursor: grab;
+    user-select: none;
+  }
+  .bar:active { cursor: grabbing; }
+
+  .bar .x {
+    width: 15px; height: 15px; flex: 0 0 auto;
+    display: grid; place-items: center;
+    background: var(--win); color: var(--ink);
+    border: 1px solid var(--ink);
+    font-size: 10px; line-height: 1;
+    cursor: pointer;
+  }
+  .bar .x:hover { background: var(--accent); color: var(--win); }
+
+  .body { padding: 10px 12px 12px; }
+
+  .body ul { list-style: none; }
+  .body li { position: relative; padding-left: 14px; }
+  .body li::before { content: "-"; position: absolute; left: 0; color: var(--ink-35); }
+  .body li em { font-style: normal; color: var(--accent); }
+
+  /* ── 배치 ──────────────────────────────────────── */
+  .desk {
+    position: relative;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 28px 20px 80px;
+    min-height: 100vh;
+  }
+
+  /* 창이 전부 absolute라 desk가 높이를 못 잡는다 — 내용 길이에 맞춰 바닥을 확보한다 */
+  @media (min-width: 1240px) { .desk { min-height: 880px; } }
+
+  /* 가로 위치는 px로 고정한다 — %로 두면 창 크기에 따라 간격이 들쭉날쭉해진다 */
+  .avatar-wrap { position: absolute; left: 40px; top: 150px; width: 200px; }
+  .avatar-wrap img {
+    width: 200px; height: auto; display: block;
+    image-rendering: pixelated;
+    filter: drop-shadow(5px 6px 0 rgba(31,36,30,.14));
+    animation: bob 4.5s ease-in-out infinite;
+  }
+  @keyframes bob { 50% { transform: translateY(-7px); } }
+
+  .bubble {
+    position: absolute;
+    background: var(--win);
+    border: 2px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--shadow);
+    padding: 7px 14px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  .bubble::after {
+    content: ""; position: absolute; left: 26px; bottom: -9px;
+    width: 0; height: 0;
+    border: 8px solid transparent;
+    border-top-color: var(--ink);
+    border-bottom: 0;
+  }
+
+  .banner {
+    display: inline-block;
+    background: var(--accent-s);
+    border: 2px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--shadow);
+    padding: 8px 20px;
+    font-family: Galmuri14, Galmuri11, sans-serif;
+    font-size: 16px;
+    letter-spacing: .04em;
+  }
+
+  /* 창 위치 (넓은 화면 전용) — 오른쪽에 같은 폭으로 세 창을 쌓는다 */
+  /* 아바타 오른쪽 끝(240px) → 창 왼쪽(400px) 사이 간격이 160px.
+     둘리도 창 오른쪽 끝(790px)에서 같은 160px을 띄워 950px에 놓는다. */
+  #w-title  { left: 400px; top: 28px; }
+  #w-hello  { left: 30px;  top: 102px; }
+  #w-trivia { left: 400px; top: 118px; width: 390px; }
+  #w-api    { left: 400px; top: 330px; width: 390px; }
+  #w-links  { left: 400px; top: 560px; width: 390px; }
+  /* 둘리 — 창 오른쪽 빈자리에 그림만 놓는다 */
+  .dooly-wrap { position: absolute; left: 950px; top: 402px; width: 250px; z-index: 1; }
+  .dooly-wrap img {
+    width: 250px; height: auto; display: block;
+    image-rendering: pixelated;
+    filter: drop-shadow(4px 5px 0 rgba(31,36,30,.14));
+    animation: bob 5.6s ease-in-out infinite .7s;
+  }
+
+  .win, .bubble, .banner-wrap { position: absolute; z-index: 1; }
+
+  /* ── API 창 ────────────────────────────────────── */
+  .ep {
+    font-family: GalmuriMono11, GalmuriMono9, monospace;
+    font-size: 11px;
+    color: var(--ink-60);
+    background: var(--win-2);
+    border: 1px solid var(--grid-bold);
+    padding: 5px 7px;
+    margin-bottom: 9px;
+    overflow-wrap: anywhere;
+  }
+  .ep b { color: var(--accent); }
+
+  .run { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; margin-bottom: 9px; }
+
+  button {
+    font-family: Galmuri11, sans-serif;
+    font-size: 12px;
+    color: var(--ink);
+    background: var(--win);
+    border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+    padding: 5px 13px;
+    cursor: pointer;
+  }
+  button:hover:not(:disabled) { background: var(--accent); color: var(--win); }
+  button:active:not(:disabled) { transform: translate(3px, 3px); box-shadow: none; }
+  button:disabled { opacity: .45; cursor: wait; }
+
+  .led { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--ink-60); }
+  .led i { width: 9px; height: 9px; background: var(--grid-bold); border: 1px solid var(--ink); font-style: normal; }
+  .led.ok i  { background: var(--leaf); }
+  .led.err i { background: var(--accent); }
+
+  .screen {
+    font-family: GalmuriMono11, GalmuriMono9, monospace;
+    font-size: 11.5px;
+    line-height: 2;
+    background: var(--ink);
+    color: #eceadf;
+    border: 2px solid var(--ink);
+    padding: 9px 10px;
+    min-height: 92px;
+    overflow-wrap: anywhere;
+  }
+  .screen .k { color: #9aa093; }
+  .screen .v { color: #ffc9dd; }
+  .screen.err { color: #ff9ec2; }
+  .screen .idle { color: #757b6f; }
+  .blink::after { content: "▌"; color: var(--accent); animation: blink 1s steps(2) infinite; }
+  @keyframes blink { 50% { opacity: 0 } }
+
+  a { color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--accent); }
+  a:hover { color: var(--accent); }
+
+  .tip {
+    position: fixed; right: 12px; bottom: 10px; z-index: 50;
+    font-size: 10.5px; color: var(--ink-35);
+    background: rgba(231,236,226,.92);
+    padding: 3px 8px;
+    border: 1px solid var(--grid-bold);
+  }
+
+  .pop { opacity: 0; animation: pop .34s steps(3) forwards; }
+  @keyframes pop { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: none } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pop, .avatar-wrap img, .dooly-wrap img { animation: none; opacity: 1; }
+    .blink::after { animation: none; }
+  }
+
+  /* ── 좁은 화면: 세로로 쌓는다 ──────────────────── */
+  @media (max-width: 1239px) {
+    .desk { padding: 20px 16px 64px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .win, .bubble, .banner-wrap, .avatar-wrap, .dooly-wrap {
+      position: static !important;
+      left: auto !important; top: auto !important;
+      width: 100% !important; max-width: 340px;
+    }
+    .dooly-wrap img { margin: 0 auto; width: 240px; }
+    .bubble { white-space: normal; text-align: center; }
+    .bubble::after { display: none; }
+    .avatar-wrap img { margin: 0 auto; width: 170px; }
+    .bar { cursor: default; }
+    .tip { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="desk">
+
+  <div class="banner-wrap pop" id="w-title" style="animation-delay:.05s">
+    <div class="banner">MEET SOOMIN !</div>
+  </div>
+
+  <div class="bubble pop" id="w-hello" style="animation-delay:.18s">HI, I'M SOOMIN.</div>
+
+  <div class="avatar-wrap pop" style="animation-delay:.3s">
+    <img src="avatar.png" alt="서수민 픽셀 아바타" width="113" height="332">
+  </div>
+
+  <!-- TRIVIA -->
+  <div class="win pop" id="w-trivia" style="animation-delay:.42s">
+    <div class="bar"><span>TRIVIA</span><span class="x" title="닫기">×</span></div>
+    <div class="body">
+      <ul>
+        <li>Seoul, KR</li>
+        <li>KMBA (2025~) · Global Business Analytics</li>
+        <li>Carnegie Mellon University 방문 연구원 (Visiting Scholar) - 2026</li>
+        <li>시장조사 5년+</li>
+        <li>관심사 : 둘리</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- LINKS -->
+  <div class="win pop" id="w-links" style="animation-delay:.54s">
+    <div class="bar"><span>LINKS</span><span class="x" title="닫기">×</span></div>
+    <div class="body">
+      <ul>
+        <li><a href="https://github.com/soomin1996" target="_blank" rel="noopener">github.com/soomin1996</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 둘리 — 아바타처럼 창 없이 그림만 띄운다 -->
+  <div class="dooly-wrap pop" style="animation-delay:.60s">
+    <img src="dooly.png" alt="강아지 둘리" width="271" height="206">
+  </div>
+
+  <!-- 백엔드 연동 (과제 필수 항목) -->
+  <div class="win pop" id="w-api" style="animation-delay:.66s">
+    <div class="bar"><span>PROFILE.EXE</span><span class="x" title="닫기">×</span></div>
+    <div class="body">
+      <div class="ep"><b>GET</b> <span id="ep-url">/profile</span></div>
+      <div class="run">
+        <button id="api-btn">데이터 불러오기</button>
+        <span class="led" id="led"><i></i><span id="led-text">대기 중</span></span>
+      </div>
+      <div class="screen" id="screen"><span class="idle">// 버튼을 누르면 서버 응답이 여기에 출력됩니다</span></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="tip">창 제목표시줄을 끌어 옮길 수 있습니다</div>
+
+<script>
+  // ── 백엔드 주소 ────────────────────────────────────
+  // 로컬에서 열면 내 컴퓨터의 FastAPI를, 배포된 사이트에서 열면 Render를 부른다.
+  const LOCAL_API    = "http://127.0.0.1:8000";
+  const DEPLOYED_API = "https://TODO-render-주소.onrender.com";   // ← Render 배포 후 교체
+
+  const isLocal = ["localhost", "127.0.0.1"].includes(location.hostname);
+  const API_URL = isLocal ? LOCAL_API : DEPLOYED_API;
+
+  document.getElementById("ep-url").textContent = `${API_URL}/profile`;
+
+  // ── API 호출 ───────────────────────────────────────
+  const btn     = document.getElementById("api-btn");
+  const screen  = document.getElementById("screen");
+  const led     = document.getElementById("led");
+  const ledText = document.getElementById("led-text");
+
+  // 응답 키를 그대로 쓰지 않고 읽기 좋은 이름으로 바꾼다
+  const LABELS = { name: "이름", role: "역할", affiliation: "소속", interests: "관심" };
+
+  btn.addEventListener("click", async () => {
+    btn.disabled = true;
+    setLed("", "요청 중");
+    screen.className = "screen";
+    // Render 무료 플랜은 쉬고 있다가 깨어나므로 첫 호출이 30초쯤 걸릴 수 있다.
+    screen.innerHTML = `<span class="blink">서버에 요청하는 중</span>`;
+
+    try {
+      const res = await fetch(`${API_URL}/profile`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const data = await res.json();   // JSON 문자열 → JS 객체
+      render(data);
+      setLed("ok", "200 OK");
+    } catch (err) {
+      // 실패를 조용히 넘기지 않고 이유를 화면에 보여준다
+      screen.className = "screen err";
+      screen.textContent = `요청 실패 — ${err.message}`;
+      setLed("err", "실패");
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  function setLed(kind, text) {
+    led.className = "led" + (kind ? " " + kind : "");
+    ledText.textContent = text;
+  }
+
+  function render(data) {
+    screen.innerHTML = Object.entries(data).map(([key, value]) => {
+      const label = LABELS[key] || key;
+      const shown = Array.isArray(value) ? value.join(", ") : value;
+      return `<div><span class="k">${label}</span> <span class="v">${shown}</span></div>`;
+    }).join("");
+  }
+
+  // ── 창 닫기 ────────────────────────────────────────
+  document.querySelectorAll(".x").forEach((x) => {
+    x.addEventListener("click", (e) => {
+      e.stopPropagation();
+      x.closest(".win").style.display = "none";
+    });
+  });
+
+  // ── 창 끌어 옮기기 (넓은 화면에서만) ───────────────
+  let top_z = 10;
+  const draggable = window.matchMedia("(min-width: 1240px)");
+
+  document.querySelectorAll(".win").forEach((win) => {
+    const bar = win.querySelector(".bar");
+
+    bar.addEventListener("pointerdown", (e) => {
+      if (!draggable.matches || e.target.classList.contains("x")) return;
+
+      win.style.zIndex = ++top_z;   // 잡은 창을 맨 앞으로
+
+      // 현재 위치를 px로 고정한 뒤 옮긴다(%로 두면 계산이 어긋난다)
+      const rect = win.getBoundingClientRect();
+      const desk = win.parentElement.getBoundingClientRect();
+      const offX = e.clientX - rect.left;
+      const offY = e.clientY - rect.top;
+
+      win.style.left = rect.left - desk.left + "px";
+      win.style.top  = rect.top  - desk.top  + "px";
+      bar.setPointerCapture(e.pointerId);
+
+      const move = (ev) => {
+        win.style.left = ev.clientX - desk.left - offX + "px";
+        win.style.top  = Math.max(0, ev.clientY - desk.top - offY) + "px";
+      };
+      const up = () => {
+        bar.removeEventListener("pointermove", move);
+        bar.removeEventListener("pointerup", up);
+      };
+      bar.addEventListener("pointermove", move);
+      bar.addEventListener("pointerup", up);
+    });
+  });
+</script>
+</body>
+</html>
