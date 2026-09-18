@@ -147,9 +147,10 @@
      둘리도 창 오른쪽 끝(790px)에서 같은 160px을 띄워 950px에 놓는다. */
   #w-title  { left: 400px; top: 28px; }
   #w-hello  { left: 30px;  top: 102px; }
+  /* 세로 간격은 넉넉하게 — API 창은 응답이 채워지면 아래로 늘어난다 */
   #w-trivia { left: 400px; top: 118px; width: 390px; }
-  #w-api    { left: 400px; top: 330px; width: 390px; }
-  #w-links  { left: 400px; top: 560px; width: 390px; }
+  #w-api    { left: 400px; top: 368px; width: 390px; }
+  #w-links  { left: 400px; top: 672px; width: 390px; }
   /* 둘리 — 창 오른쪽 빈자리에 그림만 놓는다 */
   .dooly-wrap { position: absolute; left: 950px; top: 402px; width: 250px; z-index: 1; }
   .dooly-wrap img {
@@ -203,7 +204,9 @@
     color: #eceadf;
     border: 2px solid var(--ink);
     padding: 9px 10px;
-    min-height: 92px;
+    /* 높이를 고정한다 — 응답이 채워져도 창이 늘어나 아래 창을 밀지 않는다 */
+    height: 124px;
+    overflow-y: auto;
     overflow-wrap: anywhere;
   }
   .screen .k { color: #9aa093; }
