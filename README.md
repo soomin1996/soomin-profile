@@ -12,7 +12,7 @@
 | 구분 | 주소 |
 |---|---|
 | GitHub 저장소 | https://github.com/soomin1996/soomin-profile |
-| Vercel 배포 페이지 | (배포 후 입력) |
+| Vercel 배포 페이지 | https://soomin-profile.vercel.app |
 | 백엔드 Swagger UI | https://soomin-profile.onrender.com/docs |
 
 ## 주요 구성
